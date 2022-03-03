@@ -1,0 +1,37 @@
+
+version: '3.9'
+ 
+services:
+  back:
+    container_name: back-resources-app
+    restart: always
+    build:
+      context: .
+      dockerfile: dockerfile
+    env_file: ./.env
+    ports:
+      - '5000:5000'
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongoadmin
+      MONGO_INITDB_ROOT_PASSWORD: mongoadmin
+ 
+  # mongo-express:
+  #   links:
+  #     - mongo
+  #   image: mongo-express
+  #   restart: always
+  #   ports:
+  #     - 8081:8081
+  #   environment:
+  #     ME_CONFIG_OPTIONS_EDITORTHEME: 3024-night
+  #     ME_CONFIG_BASICAUTH_USERNAME: mongoexpress
+  #     ME_CONFIG_BASICAUTH_PASSWORD: mongoexpress
+  #     ME_CONFIG_MONGODB_ADMINUSERNAME: mongoadmin
+  #     ME_CONFIG_MONGODB_ADMINPASSWORD: mongoadmin
