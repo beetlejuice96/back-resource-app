@@ -6,21 +6,18 @@ const ResourceSchema = new Schema(
     // _id: Schema.Types.ObjectId,
     title: {
       type: "string",
+      maxLength: 25,
     },
     description: {
       type: "string",
+      maxLength: 60,
     },
     url: {
       type: "string",
     },
     group: { type: Schema.Types.ObjectId, ref: "Group" },
-  }
-  // {
-  //   timestamps: {
-  //     createdAt: "createdAt",
-  //     updatedAt: "updatedAt",
-  //   },
-  // }
+  },
+  { timestamps: true }
 );
 
 export interface IResource extends Document {

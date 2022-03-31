@@ -34,13 +34,23 @@ class ResourceController {
   }
 
   async findResourceById(req: any, res: any, next: any) {
-    const { query: idRequest } = req;
-    console.log(req.query);
+    const { id } = req.query;
     try {
-      let resource = await Resource.findOne({ _id: idRequest.id });
+      let resource = await Resource.findOne({ _id: id });
       if (resource) {
         return res.json(resource);
       }
+    } catch (error) {
+      console.error(error);
+      return res.status(400).send({ message: error });
+    }
+  }
+
+  async getAll(req: any, res: any, next: any) {
+    const { idGroup } = req.params;
+    try {
+      let resources = await Resource.find({ group: idGroup });
+      return res.json(resources);
     } catch (error) {
       console.error(error);
       return res.status(400).send({ message: error });

@@ -6,6 +6,7 @@ const ResourceApi = (app: Express) => {
   app.use("/api/resource", router);
 
   router.post("/", ResourceController.create);
+  router.get("/:idGroup", ResourceController.getAll);
   router.get("/", ResourceController.findResourceById);
 };
 export default ResourceApi;

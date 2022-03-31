@@ -1,14 +1,18 @@
 import mongoose from "mongoose";
 const { model, Schema } = mongoose;
 
-const GroupSchema = new Schema({
-  title: {
-    type: "string",
+const GroupSchema = new Schema(
+  {
+    title: {
+      type: "string",
+      maxLength: 20,
+    },
+    resources: [
+      { type: Schema.Types.ObjectId, ref: "Resource", required: false },
+    ],
   },
-  resources: [
-    { type: Schema.Types.ObjectId, ref: "Resource", required: false },
-  ],
-});
+  { timestamps: true }
+);
 
 export interface IGroup extends Document {
   title: string;
