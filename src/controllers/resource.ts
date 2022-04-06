@@ -56,6 +56,46 @@ class ResourceController {
       return res.status(400).send({ message: error });
     }
   }
+
+  async delete(req: any, res: any, next: any) {
+    const { resourceId } = req.query;
+
+    try {
+      let resource = await Resource.findOne({ _id: resourceId });
+
+      if (!resource) {
+        return res.status(404).send({ message: "resource no encontrado!" });
+      }
+      // borro el elemento del array del grupo
+      let group: IGroup = await Group.findOne({ _id: resource.group });
+
+      console.log(group);
+      group.resources = group.resources.filter(
+        (resource) => resource.valueOf() !== resourceId
+      );
+
+      let groupUpdated = await Group.updateOne(
+        { _id: resource.group },
+        { $set: { resources: group.resources } }
+      );
+      if (!groupUpdated) {
+        return res
+          .status(404)
+          .send({ message: "no se pudo eliminar el elemento del grupo" });
+      }
+
+      let resourceDeleted = await Resource.deleteOne({ _id: resourceId });
+
+      if (resourceDeleted) {
+        return res.json(resourceDeleted);
+      }
+    } catch (error) {
+      console.error(error);
+      return res.status(400).send({
+        message: error,
+      });
+    }
+  }
 }
 
 export default new ResourceController();

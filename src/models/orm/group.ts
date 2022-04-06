@@ -16,7 +16,7 @@ const GroupSchema = new Schema(
 
 export interface IGroup extends Document {
   title: string;
-  resources: [];
+  resources: any[];
 }
 
 export default model<IGroup>("Group", GroupSchema);

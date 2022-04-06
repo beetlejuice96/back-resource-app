@@ -8,5 +8,6 @@ const ResourceApi = (app: Express) => {
   router.post("/", ResourceController.create);
   router.get("/:idGroup", ResourceController.getAll);
   router.get("/", ResourceController.findResourceById);
+  router.delete("/", ResourceController.delete);
 };
 export default ResourceApi;

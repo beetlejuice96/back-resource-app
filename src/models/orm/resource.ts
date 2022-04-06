@@ -21,6 +21,7 @@ const ResourceSchema = new Schema(
 );
 
 export interface IResource extends Document {
+  _id: number;
   title: string;
   description: string;
   url: string;
